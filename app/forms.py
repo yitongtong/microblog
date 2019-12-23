@@ -51,3 +51,12 @@ class PostForm(FlaskForm):
                          DataRequired(), Length(min=1, max=140)])
     submit = SubmitField('提交')
 
+
+class ResetPasswordRequestForm(FlaskForm):
+    email = StringField('邮箱', validators=[DataRequired(), Email()])
+    submit = SubmitField('提交')
+
+class ResetPasswordForm(FlaskForm):
+    password = PasswordField('新密码', validators=[DataRequired()])
+    password2 = PasswordField('确认新密码', validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('重制密码')
