@@ -2,23 +2,31 @@
 
 {% block app_content %}
     <br>
-    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Hi, {{ current_user.username }} </h1>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-12">
+            <!-- Basic Card Example -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Hi, {{ current_user.username }}</h6>
+                </div>
+                {% if form %}
+                <div class="card-body">
+                    <form class="user" method="POST">
+                        {{ form.hidden_tag() }}
+                        <div class="form-group">
+                            {{ form.post(class="form-control form-control-user", placeholder="说点什么吧。。。") }}
+                            {% for error in form.post.errors %}
+                            <span style="color: red;">[{{ error }}]</span>
+                            {% endfor %}
+                        </div>
+                        {{ form.submit(class="btn btn-primary btn-user btn-block") }}
+                    </form>
+                </div>
+                {% endif %}
+            </div>
+        </div>
     </div>
-    
-    {% if form %}
-    <form action="" method="post">
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.post.label }}<br>
-            {{ form.post(cols=32, rows=4) }}<br>
-            {% for error in form.post.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>{{ form.submit() }}</p>
-    </form>
-    {% endif %}
 
     {% for post in posts %}
     <!-- DataTales Example -->
