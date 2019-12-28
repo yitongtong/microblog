@@ -18,9 +18,15 @@
                 {{ form.hidden_tag() }}
                 <div class="form-group">
                   {{ form.username(class="form-control form-control-user", placeholder="请输入账号...") }}
+                  {% for error in form.username.errors %}
+                    alert( {{error}} )
+                  {% endfor %}
                 </div>
                 <div class="form-group">
                   {{ form.password(class="form-control form-control-user", placeholder="请输入密码...") }}
+                  {% for error in form.password.errors %}
+                    alert( {{error}} )
+                  {% endfor %}
                 </div>
                 <div class=" form-group">
                   <div class="custom-control custom-checkbox small">
