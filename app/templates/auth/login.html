@@ -1,4 +1,4 @@
-{% extends "login_base.html" %}
+{% extends "auth/login_base.html" %}
 
 {% block login_container %}
 <!-- Outer Row -->
@@ -38,10 +38,10 @@
               </form>
               <hr>
               <div class="text-center">
-                <a class="small" href="{{ url_for('reset_password_request') }}">已有账号，忘记密码?</a>
+                <a class="small" href="{{ url_for('auth.reset_password_request') }}">已有账号，忘记密码?</a>
               </div>
               <div class="text-center">
-                <a class="small" href="{{ url_for('register') }}">没有账号？创建一个!</a>
+                <a class="small" href="{{ url_for('auth.register') }}">没有账号？创建一个!</a>
               </div>
             </div>
           </div>

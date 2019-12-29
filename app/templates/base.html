@@ -34,7 +34,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ url_for('index') }}">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ url_for('main.index') }}">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
@@ -46,13 +46,13 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('index') }}">
+                <a class="nav-link" href="{{ url_for('main.index') }}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>首页</span></a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('explore') }}">
+                <a class="nav-link" href="{{ url_for('main.explore') }}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Explore</span></a>
             </li>
@@ -63,7 +63,7 @@
             {% if current_user.is_anonymous %}
 
             <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('login') }}">
+                <a class="nav-link" href="{{ url_for('auth.login') }}">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>登录</span></a>
             </li>
@@ -71,7 +71,7 @@
             {% else %}
             <!-- Nav Item - Charts -->
             <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('user', username=current_user.username) }}">
+                <a class="nav-link" href="{{ url_for('main.user', username=current_user.username) }}">
                     <i class="fas fa-fw fa-chart-area"></i>
                     <span>个人中心</span></a>
             </li>
@@ -81,7 +81,7 @@
 
             <!-- Nav Item - Tables -->
             <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('logout') }}">
+                <a class="nav-link" href="{{ url_for('auth.logout') }}">
                     <i class="fas fa-fw fa-table"></i>
                     <span>退出</span></a>
             </li>
