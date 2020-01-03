@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block app_content %}
+    <br>
+    {% for post in posts %}
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            {% include '_post.html' %}
+        </div>
+    </div>
+    {% endfor %}
+
+    <!-- 页码 -->
+    <nav aria-label="...">
+        <ul class="pager">
+            <li class="previous{% if not prev_url %} dissable{% endif %}">
+                <a href="{{ prev_url or '#' }}">
+                    <span aria-hidden="true">&larr;</span>上一页
+                </a>
+            </li>
+            <li class="next{% if not next_url %} dissable{% endif %}">
+                <a href="{{ next_url or '#' }}">
+                    下一页<span aria-hidden="true">&rarr;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+{% endblock %}

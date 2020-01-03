@@ -19,3 +19,5 @@ class Config(object):
     ADMINS = ['yit_copper@163.com']
     # post page
     POSTS_PER_PAGE = 25
+    # Search
+    ELASTICSEARCH_URL = os.environ.get('ELASTICSEARCH_URL')
