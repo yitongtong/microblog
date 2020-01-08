@@ -20,4 +20,6 @@ class Config(object):
     # post page
     POSTS_PER_PAGE = 25
     # Search
-    ELASTICSEARCH_URL = os.environ.get('ELASTICSEARCH_URL')
+    # ELASTICSEARCH_URL = os.environ.get('ELASTICSEARCH_URL')
+    ELASTICSEARCH_URL = 'http://localhost:9200'
+    
