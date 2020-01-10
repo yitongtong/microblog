@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block styles %}
+    {{ super() }}
+
+    <link href="{{ url_for('static', filename='editormd/css/editormd.css') }}" rel="stylesheet">
+{% endblock styles %}
+
+{% block app_content %}
+
+<br>
+
+<div class="row justify-content-center">
+    <div class="col-lg-12">
+        <!-- Basic Card Example -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">写文章</h6>
+            </div>
+            <div class="card-body">
+                <div id="test-editormd">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    
+    <script src="{{ url_for('static',filename='editormd/examples/js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static',filename='editormd/editormd.min.js') }}"></script>
+    <script type="text/javascript">
+        var testEditor;
+    
+        $(function () {
+            testEditor = editormd("test-editormd", {
+                width: "90%",
+                height: 640,
+                syncScrolling: "single",
+                path: "{{ url_for('static',filename='editormd/lib/') }}"
+            });
+        });
+    </script>
+
+{% endblock %}

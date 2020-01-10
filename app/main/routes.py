@@ -125,3 +125,8 @@ def search():
         if page > 1 else None
     return render_template('search.html', title="Search", posts=posts, next_url=next_url, prev_url=prev_url)
     
+
+@bp.route('/write')
+@login_required
+def write_post():
+    return render_template('write_post.html', title='写文章')
