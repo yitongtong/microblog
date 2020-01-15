@@ -2,7 +2,7 @@ from datetime import datetime
 from flask import render_template, flash, redirect, url_for, request, current_app, g
 from flask_login import current_user, login_required
 from app import db
-from app.main.forms import EditProfileForm, PostForm, SearchForm
+from app.main.forms import EditProfileForm, PostForm, SearchForm, WriteForm
 from app.models import User, Post
 from app.main import bp
 
@@ -118,15 +118,23 @@ def search():
     if not g.search_form.validate():
         return redirect(url_for('main.explore'))
     page = request.args.get('page', 1, type=int)
-    posts, total = Post.search(g.search_form.q.data, page, current_app.config['POSTS_PER_PAGE'])
+    posts, total = Post.search(
+        g.search_form.q.data, page, current_app.config['POSTS_PER_PAGE'])
     next_url = url_for('main.search', q=g.search_form.q.data, page=page + 1) \
         if total > page * current_app.config['POSTS_PER_PAGE'] else None
     prev_url = url_for('main.search', q=g.search_form.q.data, page=page - 1) \
         if page > 1 else None
     return render_template('search.html', title="Search", posts=posts, next_url=next_url, prev_url=prev_url)
-    
 
-@bp.route('/write')
+
+@bp.route('/write', methods=['POST', 'GET'])
 @login_required
 def write_post():
-    return render_template('write_post.html', title='写文章')
+    form = WriteForm()
+    if form.validate_on_submit():
+        post = Post(title=form.title.data,
+                    body=form.text.data, author=current_user)
+        db.session.add(post)
+        db.session.commit()
+        return redirect(url_for('main.index'))
+    return render_template('write_post.html', title='写文章', form=form)

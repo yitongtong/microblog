@@ -36,3 +36,9 @@ class PostForm(FlaskForm):
     post = TextAreaField('说点什么吧。。。', validators=[
                          DataRequired(), Length(min=1, max=140)])
     submit = SubmitField('提交')
+
+
+class WriteForm(FlaskForm):
+    title = StringField('文章标题', [DataRequired(), Length(max=255)])
+    text = TextAreaField('文章内容', [DataRequired()])
+    submit = SubmitField('发布')

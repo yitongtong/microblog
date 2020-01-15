@@ -6,6 +6,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from time import time
 import jwt
 from app.search import add_to_index, remove_from_index, query_index
+from markdown import markdown
+import bleach
 
 
 class SearchableMixin(object):
@@ -130,9 +132,30 @@ def load_user(id):
 class Post(SearchableMixin, db.Model):
     __searchable__ = ['body']
     id = db.Column(db.Integer, primary_key=True)
-    body = db.Column(db.String(140))
+    title = db.Column(db.String(255))
+    body = db.Column(db.Text)
+    body_html = db.Column(db.Text)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
+    @staticmethod
+    def on_change_body(target, value, oldValue, initiator):
+        allow_tags = [
+            'a', 'abbr', 'acronym', 'b', 'blockquote', 'code',
+            'em', 'i', 'li', 'ol', 'pre', 'strong', 'ul',
+            'h1', 'h2', 'h3', 'p', 'img', 'video', 'div', 'iframe',
+            'p', 'br', 'span', 'hr', 'src', 'class'
+        ]
+        allowed_attrs = {
+            '*': ['class'],
+            'a': ['href', 'rel'],
+            'img': ['src', 'alt'],
+        }
+        target.body_html = bleach.linkify(bleach.clean(markdown(
+            value, output_format='html'), tags=allow_tags, strip=True, attributes=allowed_attrs))
+
     def __repr__(self):
         return '<Post {}>'.format(self.body)
+
+
+db.event.listen(Post.body, 'set', Post.on_change_body)
