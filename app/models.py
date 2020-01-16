@@ -6,8 +6,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from time import time
 import jwt
 from app.search import add_to_index, remove_from_index, query_index
-from markdown import markdown
-import bleach
+import mistune
 
 
 class SearchableMixin(object):
@@ -140,19 +139,7 @@ class Post(SearchableMixin, db.Model):
 
     @staticmethod
     def on_change_body(target, value, oldValue, initiator):
-        allow_tags = [
-            'a', 'abbr', 'acronym', 'b', 'blockquote', 'code',
-            'em', 'i', 'li', 'ol', 'pre', 'strong', 'ul',
-            'h1', 'h2', 'h3', 'p', 'img', 'video', 'div', 'iframe',
-            'p', 'br', 'span', 'hr', 'src', 'class'
-        ]
-        allowed_attrs = {
-            '*': ['class'],
-            'a': ['href', 'rel'],
-            'img': ['src', 'alt'],
-        }
-        target.body_html = bleach.linkify(bleach.clean(markdown(
-            value, output_format='html'), tags=allow_tags, strip=True, attributes=allowed_attrs))
+        target.body_html = mistune.markdown(value)
 
     def __repr__(self):
         return '<Post {}>'.format(self.body)

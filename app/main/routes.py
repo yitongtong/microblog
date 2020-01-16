@@ -138,3 +138,10 @@ def write_post():
         db.session.commit()
         return redirect(url_for('main.index'))
     return render_template('write_post.html', title='写文章', form=form)
+
+
+@bp.route('/post_detail/<postid>')
+@login_required
+def post_detail(postid):
+    post = Post.query.filter_by(id=postid).first_or_404()
+    return render_template('post_detail.html', title=post.title, post=post)

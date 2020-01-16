@@ -12,7 +12,9 @@
                 </a>
                 said {{ moment(post.timestamp).fromNow() }}:
                 <br>
-                {{ post.title }}
+                {{ post.body_html|safe|striptags|truncate }}
+                <br>
+                <a href="{{ url_for('main.post_detail', postid=post.id) }}">查看更多</a>
             </td>
         </tr>        
     </tbody>

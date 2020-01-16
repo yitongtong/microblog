@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block styles %}
+    {{ super() }}
+
+    <link href="{{ url_for('static', filename='editormd/css/editormd.preview.min.css') }}" rel="stylesheet" />  
+    <link href="{{ url_for('static', filename='editormd/css/editormd.css') }}" rel="stylesheet" /> 
+
+{% endblock styles %}
+
+{% block app_content %}
+
+<br>
+
+<div class="row justify-content-center">
+    <div class="col-lg-12">
+        <!-- Basic Card Example -->
+        <div class="card shadow mb-4">
+            <div class="card-body">
+                <div class="content" id="fancy-content">
+                    {{ post.body_html|safe }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    
+    <!--以下是js部分 -->
+    <script type="text/javascript" src="{{ url_for('static', filename='editormd/lib/marked.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='editormd/lib/prettify.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='editormd/editormd.min.js') }}"></script>
+    <script type="text/javascript">
+        editormd.markdownToHTML("fancy-content");
+    </script>
+
+{% endblock %}
